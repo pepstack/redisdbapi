@@ -13,10 +13,11 @@
 
 void RDBCtxNodeFree(RedisdbCtxNode *ctxnode)
 {
-    if (ctxnode && ctxnode->ctx) {
-        /* Disconnects and frees the context */
-        redisFree(ctxnode->ctx);
-
+    if (ctxnode) {
+        redisContext *ctx = ctxnode->ctx;
         ctxnode->ctx = NULL;
+        if (ctx) {
+            redisFree(ctx);
+        }
     }
 }

@@ -15,18 +15,34 @@
 
 int main(int argc, char *argv[])
 {
-    char path[256];
+    char nodesfile[256];
+    char authfile[256];
 
-    snprintf(path, 255, "file://%s/CLUSTER_ALL_NODES", getenv("REDIS_CLUSTER_HOME"));
+    RDBEnv env;
+    RDBCtxNode node;
 
-    printf("CLUSTER_ALL_NODES=%s\n", path);
+    snprintf(nodesfile, 255, "file://%s/CLUSTER_ALL_NODES", getenv("REDIS_CLUSTER_HOME"));
+    snprintf(authfile, 255, "file://%s/REDIS-AUTH-PASSWORD", getenv("REDIS_CLUSTER_HOME"));
 
-    RDBEnv env = RDBEnvCreate(path, "red123");
+    printf("all nodes file: %s\n", nodesfile);
+    printf("auth pass file: %s\n", authfile);
+
+    env = RDBEnvCreate(nodesfile, authfile);
+    if (! env) {
+        exit(-1);
+    }
+    RDBEnvFree(env);
+
+
+    env = RDBEnvCreate("hacl-node1:6377,hacl-node1:6378,hacl-node1:6379", authfile);
     if (! env) {
         exit(-1);
     }
 
-    //
+    int nodes = RDBEnvGetNodes(env);
+    printf("all nodes=%d\n", nodes);
+
+    RDBEnvConnectNode(env, NULL, 0, 0);
 
     RDBEnvFree(env);
     return 0;

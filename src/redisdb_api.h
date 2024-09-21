@@ -39,6 +39,8 @@ extern "C" {
 #define REDISDB_API_SUCCESS   (0)
 #define REDISDB_API_ERROR    (-1)
 
+#define REDISDB_API_NEXT      (1)
+
 typedef struct _RedisdbEnv        * RDBEnv;
 typedef struct _RedisdbCtxNode    * RDBCtxNode;
 
@@ -69,6 +71,13 @@ REDISDB_API RDBEnv RDBEnvCreate(const char *cluster_nodes, const char *auth_pass
  */
 REDISDB_API void RDBEnvFree(RDBEnv env);
 
+REDISDB_API int RDBEnvGetNodes(RDBEnv env);
+
+REDISDB_API RDBCtxNode RDBEnvGetNodeAt(RDBEnv env, int index);
+
+REDISDB_API RDBCtxNode RDBEnvConnectNode(RDBEnv env, RDBCtxNode node, int connect_timeout_ms, int io_timeout_ms);
+
+REDISDB_API int RDBEnvDisconnectNode(RDBEnv env, RDBCtxNode node);
 
 #if defined(__cplusplus)
 }
