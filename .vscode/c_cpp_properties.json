@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "linux64 build config",
+            "compilerPath": "/usr/bin/gcc",
+            "includePath": [
+                "/usr/include",
+                "/usr/local/include",
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/src/common",
+                "${workspaceFolder}/libs/hiredis/include",
+                "${workspaceFolder}/libs/hiredis/include/hiredis",
+                "${workspaceFolder}/libs/hiredis/include/hiredis/adapters"
+            ],
+            "defines": [
+                "_DEBUG"
+            ],
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}
