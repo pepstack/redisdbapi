@@ -30,7 +30,7 @@
  * @author     Liang Zhang <350137278@qq.com>
  * @version    0.0.14
  * @create     2019-09-30 12:37:44
- * @update     2021-07-20 13:26:44
+ * @update     2024-09-24 23:26:44
  */
 #ifndef UNITYPES_H_INCLUDED
 #define UNITYPES_H_INCLUDED
@@ -364,7 +364,7 @@ int snprintf_chkd_V1(char *outputbuf, size_t bufsize, const char *format, ...)
 
     if (len < 0 || len >= (int)bufsize) {
         /* output was truncated due to bufsize limit */
-        len = (int)bufsize - 1;
+        len = (int) bufsize - 1;
 
         /* for MSVC */
         outputbuf[len] = '\0';
@@ -406,6 +406,59 @@ int snprintf_chkd_V2(int exitcode, char *outputbuf, size_t bufsize, const char *
 
     return len;
 }
+
+
+/**
+ * 新的程序应该使用: snprintf_chk
+ */
+NOWARNING_UNUSED(static)
+int snprintf_safe(char *outputbuf, size_t bufsize, const char *format, ...)
+{
+    int len;
+
+    va_list args;
+    va_start(args, format);
+    len = vsnprintf(outputbuf, bufsize, format, args);
+    va_end(args);
+
+    if (len < 0) {
+        outputbuf[0] = '\0';
+    } else {
+        outputbuf[bufsize - 1] = '\0';
+    }
+
+    /**
+     * if len >= bufsize, output was truncated due to bufsize limit;
+     * if leb < 0, an error ocurred.
+     */
+    return len;
+}
+
+
+/**
+ * 如果失败则中断运行. 初始化时使用这个函数减少代码检查
+ */
+NOWARNING_UNUSED(static)
+int snprintf_chk_abort(char *outputbuf, size_t bufsize, const char *format, ...)
+{
+    int len;
+
+    va_list args;
+    va_start(args, format);
+    len = vsnprintf(outputbuf, bufsize, format, args);
+    va_end(args);
+
+    if (len < 0 || len >= (int) bufsize) {
+        outputbuf[0] = '\0';
+        fprintf(stderr, "(%s:%d) fatal error when calling: vsnprintf.\n", __FILE__, __LINE__);
+        abort();
+        return -1;
+    }
+
+    outputbuf[bufsize - 1] = '\0';
+    return len;
+}
+
 
 #define snprintf_V1    snprintf
 

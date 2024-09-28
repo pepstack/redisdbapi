@@ -12,6 +12,8 @@
  **********************************************************************/
 #include "redisdb_api.h"
 
+#include <common/unitypes.h>
+
 
 int main(int argc, char *argv[])
 {
@@ -21,8 +23,8 @@ int main(int argc, char *argv[])
     RDBEnv env;
     RDBCtxNode node;
 
-    snprintf(nodesfile, 255, "file://%s/CLUSTER_ALL_NODES", getenv("REDIS_CLUSTER_HOME"));
-    snprintf(authfile, 255, "file://%s/REDIS-AUTH-PASSWORD", getenv("REDIS_CLUSTER_HOME"));
+    snprintf_chk_abort(nodesfile, sizeof(nodesfile), "file://%s/CLUSTER_ALL_NODES", getenv("REDIS_CLUSTER_HOME"));
+    snprintf_chk_abort(authfile, sizeof(authfile), "file://%s/REDIS-AUTH-PASSWORD", getenv("REDIS_CLUSTER_HOME"));
 
     printf("all nodes file: %s\n", nodesfile);
     printf("auth pass file: %s\n", authfile);

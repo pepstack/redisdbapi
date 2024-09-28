@@ -24,9 +24,7 @@
     },
     "terminal.integrated.defaultProfile.windows": "msys64-bash",
     "files.associations": {
-        "redisdb_api.h": "c",
-        "redisdb_ctx.h": "c",
-        "redisdb_env.h": "c",
-        "redisdb_err.h": "c"
+        "*.h": "c",
+        "*.c": "c"
     }
 }
