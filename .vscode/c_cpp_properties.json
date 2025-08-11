@@ -1,18 +1,31 @@
 {
     "configurations": [
         {
-            "name": "linux64 build config",
+            "name": "Mingw64 Debug Config",
+            "windowsSdkVersion": "10.0.18362.0",
+            "compilerPath": "${env:MSYS2_ROOT_BASH}/mingw64/bin/gcc.exe",
+            "includePath": [
+                "${env:MSYS2_ROOT_BASH}/mingw64/include",
+                "${workspaceFolder}/src/**"
+            ],
+            "defines": [
+                "DEBUG",
+                "_DEBUG",
+                "__MINGW64__"
+            ],
+            "intelliSenseMode": "gcc-x64"
+        },
+        {
+            "name": "Linux64 Debug Config",
             "compilerPath": "/usr/bin/gcc",
             "includePath": [
                 "/usr/include",
                 "/usr/local/include",
-                "${workspaceFolder}/src",
-                "${workspaceFolder}/src/common",
-                "${workspaceFolder}/libs/hiredis/include",
-                "${workspaceFolder}/libs/hiredis/include/hiredis",
-                "${workspaceFolder}/libs/hiredis/include/hiredis/adapters"
+                "${workspaceFolder}/src/**",
+                "${workspaceFolder}/deps/include/**"
             ],
             "defines": [
+                "DEBUG",
                 "_DEBUG"
             ],
             "intelliSenseMode": "gcc-x64"

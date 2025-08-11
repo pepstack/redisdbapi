@@ -3,7 +3,8 @@
  * @brief test redisdb api for debug libredisdb
  *
  * @author master@mapaware.top
- * @date 2024-09-22
+ * @since 2024-09-22
+ * @date 2025-08-12
  * @version 0.0.1
  * @copyright mapaware.top
  * @note
@@ -14,29 +15,19 @@
 
 #include <common/unitypes.h>
 
+// 手工设置下面的值:
+#define CLUSTER_ALL_NODES  "file:///opt/redis_cluster/radius/CLUSTER_ALL_NODES"
+#define CLUSTER_AUTH_PASS  "file:///opt/redis_cluster/radius/CLUSTER_AUTH_PASS"
 
 int main(int argc, char *argv[])
 {
-    char nodesfile[256];
-    char authfile[256];
-
     RDBEnv env;
     RDBCtxNode node;
 
-    snprintf_chk_abort(nodesfile, sizeof(nodesfile), "file://%s/CLUSTER_ALL_NODES", getenv("REDIS_CLUSTER_HOME"));
-    snprintf_chk_abort(authfile, sizeof(authfile), "file://%s/REDIS-AUTH-PASSWORD", getenv("REDIS_CLUSTER_HOME"));
+    printf("CLUSTER_ALL_NODES: %s\n", CLUSTER_ALL_NODES);
+    printf("CLUSTER_AUTH_PASS: %s\n", CLUSTER_AUTH_PASS);
 
-    printf("all nodes file: %s\n", nodesfile);
-    printf("auth pass file: %s\n", authfile);
-
-    env = RDBEnvCreate(nodesfile, authfile);
-    if (! env) {
-        exit(-1);
-    }
-    RDBEnvFree(env);
-
-
-    env = RDBEnvCreate("hacl-node1:6377,hacl-node1:6378,hacl-node1:6379", authfile);
+    env = RDBEnvCreate(CLUSTER_ALL_NODES, CLUSTER_AUTH_PASS);
     if (! env) {
         exit(-1);
     }
@@ -44,7 +35,9 @@ int main(int argc, char *argv[])
     int nodes = RDBEnvGetNodes(env);
     printf("all nodes=%d\n", nodes);
 
-    RDBEnvConnectNode(env, NULL, 0, 0);
+    node = RDBEnvGetNodeAt(env, 0);
+
+    node = RDBEnvConnectNode(env, node, 0, 0);
 
     RDBEnvFree(env);
     return 0;

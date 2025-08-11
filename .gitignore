@@ -1,3 +1,6 @@
+# ignored dirs:
+deps/
+
 # Prerequisites
 *.d
 

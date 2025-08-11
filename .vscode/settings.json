@@ -1,13 +1,31 @@
 {
+    // settings.json for C/C++
     "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "window.zoomLevel": 1,
     "git.ignoreLegacyWarning": true,
-    "editor.formatOnSave": false,
+
+    // 文件关联 - 添加汇编支持
+    "files.associations": {
+        "*.h": "c",
+        "*.c": "c",
+        "*.cxx": "cpp",
+        "*.cpp": "cpp",
+        "*.s": "assembly",  // 添加汇编支持
+        "*.asm": "assembly"
+    },
+
+    // 终端配置 - Linux/WSL
+    "terminal.integrated.env.linux": {
+        "PATH": "${env:PATH}:/usr/bin"
+    },
+    "terminal.integrated.defaultProfile.linux": "bash",
+
+    // 终端配置 - Windows (MinGW64)
     "terminal.integrated.profiles.windows": {
-        "msys64-bash": {
+        "mingw64-bash": {
             "path": [
-                "${env:MSYS64_HOME}\\usr\\bin\\bash.exe"
+                "${env:MSYS2_ROOT_BASH}/usr/bin/bash.exe"
             ],
             "icon": "terminal-bash",
             "args": [
@@ -16,15 +34,31 @@
             ],
             "env": {
                 "MSYSTEM": "MINGW64",
+                "MSYS2_PATH_TYPE": "inherit",
+                "CHERE_INVOKING": "1",
                 "CONTITLE": "MinGW x64",
                 "C_INCLUDE_PATH": "/mingw64/include",
-                "CPLUS_INCLUDE_PATH": "/mingw64/include"
+                "CPLUS_INCLUDE_PATH": "/mingw64/include",
+                // 开发纯 Windows 应用时使用 MinGW 库: /mingw64/lib
+                // 开发 POSIX 兼容应用时使用 MSYS2 库: /usr/lib
+                "LIBRARY_PATH": "/mingw64/lib:/usr/lib",
+
+                // THE FOLLOWING IS A HACK TO PLACE THE MSYS PATHS BEFORE THE WINDOWS ONES
+                "PATH": "/mingw64/bin:/usr/bin:${env:PATH}"
             }
         }
     },
-    "terminal.integrated.defaultProfile.windows": "msys64-bash",
-    "files.associations": {
-        "*.h": "c",
-        "*.c": "c"
-    }
+    "terminal.integrated.defaultProfile.windows": "mingw64-bash",
+
+    // 汇编特定设置
+    "[assembly]": {
+        "editor.formatOnSave": true,
+        // "editor.defaultFormatter": "13xforever.language-x86-64-assembly",
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true
+    },
+
+    // 调试设置
+    "debug.internalConsoleOptions": "neverOpen",
+    "debug.allowBreakpointsEverywhere": true
 }

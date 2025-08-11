@@ -16,7 +16,7 @@ __thread RedisdbErr thread_local_err = {0};
 
 static int RedisAuthNode(redisContext *ctx, const char *authpass)
 {
-    redisReply *reply = (redisReply *) redisCommand(ctx, "AUTH %*s", cstr_length(authpass, MAXPASSWORDLEN), authpass);
+    redisReply *reply = (redisReply *) redisCommand(ctx, "AUTH %s", authpass);
     if (! reply) {
         return REDISDB_API_ERROR;
     }
@@ -101,6 +101,7 @@ static int RedisConnectNode(RDBCtxNode node, int conn_ms, int io_ms)
     }
 
     node->ctx = ctx;
+
     return RedisConnectNode(node, conn_ms, io_ms);
 }
 
@@ -179,7 +180,7 @@ RDBEnv RDBEnvCreate(const char *cluster_nodes, const char *auth_pass)
                         env->nodes[env->num_nodes].port = atoi(pport);
                         memcpy(env->nodes[env->num_nodes].host, host, pport - host);
                     }
-                    memcpy(env->nodes[env->num_nodes].auth, auth_pass, MAXPASSWORDLEN);
+                    memcpy(env->nodes[env->num_nodes].auth, pass, MAXPASSWORDLEN);
                     env->num_nodes++;
                 }
             }
@@ -293,18 +294,24 @@ RDBCtxNode RDBEnvGetNodeAt(RDBEnv env, int index)
 RDBCtxNode RDBEnvConnectNode(RDBEnv env, RDBCtxNode connnode, int conn_timeout_ms, int io_timeout_ms)
 {
     RedisdbEnv * pEnv = (RedisdbEnv *) env;
+    RDBCtxNode retnode = NULL;
 
     if (! connnode) {
         // connect all nodes and returns the first connected node
         for (int i = 0; i < pEnv->num_nodes; i++) {
-            RedisConnectNode(&pEnv->nodes[i], conn_timeout_ms, io_timeout_ms);
+            int ret = RedisConnectNode(&pEnv->nodes[i], conn_timeout_ms, io_timeout_ms);
+            if (ret == REDISDB_API_SUCCESS && !retnode) {
+                retnode = & pEnv->nodes[i];
+            }
         }
     } else {
         // connect only the node
-        RedisConnectNode(connnode, conn_timeout_ms, io_timeout_ms);
+        if (REDISDB_API_SUCCESS == RedisConnectNode(connnode, conn_timeout_ms, io_timeout_ms)) {
+            retnode = connnode;
+        }
     }
 
-    return NULL;
+    return retnode;
 }
 
 
