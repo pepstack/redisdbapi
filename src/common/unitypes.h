@@ -28,7 +28,10 @@
  *   Universal Definitions and Types, Bob Jenkins, Liang Zhang
  *
  * @author     Liang Zhang <350137278@qq.com>
- * @version    0.0.14
+ * @copyright © 2024-2030 mapaware.top All Rights Reserved.
+ * @version 0.0.15
+ * @since 2025-08-12 02:44:41
+ * @date 2025-08-12 02:44:41
  * @create     2019-09-30 12:37:44
  * @update     2024-09-24 23:26:44
  */

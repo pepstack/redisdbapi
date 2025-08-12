@@ -28,7 +28,10 @@
  *  memory helper api both for linux and windows.
  *
  * @author     Liang Zhang <350137278@qq.com>
- * @version    0.0.10
+ * @copyright © 2024-2030 mapaware.top All Rights Reserved.
+ * @version 0.0.11
+ * @since 2025-08-12 02:44:41
+ * @date 2025-08-12 02:44:41
  * @create     2018-10-25 09:09:10
  * @update     2021-06-18 17:27:33
  */

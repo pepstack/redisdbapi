@@ -28,7 +28,10 @@
  *     The first file you should included
  *
  * @author     350137278@qq.com
- * @version    0.0.1
+ * @copyright © 2024-2030 mapaware.top All Rights Reserved.
+ * @version 0.0.2
+ * @since 2025-08-12 02:44:41
+ * @date 2025-08-12 02:44:41
  * @create     2020-06-12 21:12:22
  * @update     2020-07-09 17:38:42
  */

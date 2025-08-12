@@ -1,5 +1,9 @@
 # ignored dirs:
 deps/
+__pycache__/
+
+# ignored files:
+*.pyc
 
 # Prerequisites
 *.d

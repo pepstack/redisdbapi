@@ -28,7 +28,10 @@
  *  C String Buffer Functions.
  *
  * @author     Liang Zhang <350137278@qq.com>
- * @version    0.0.10
+ * @copyright © 2024-2030 mapaware.top All Rights Reserved.
+ * @version 0.0.11
+ * @since 2025-08-12 02:44:41
+ * @date 2025-08-12 02:44:41
  * @create     2017-08-28 11:12:10
  * @update     2024-09-23 22:44:46
  */
