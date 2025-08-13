@@ -169,7 +169,7 @@ clean:
 	-rm -f $(PREFIX)/$(REDISDB_DYNAMICLIB)
 	-rm -f $(PREFIX)/$(REDISDB_STATICLIB).$(REDISDB_VERSION)
 	-rm -f $(PREFIX)/$(REDISDB_DYNAMICLIB).$(REDISDB_VERSION)
-	-rm -f $(PREFIX)/rdbtest $(PREFIX)/rdbtest
+	-rm -f $(PREFIX)/rdbtest
 
 #----------------------------------------------------------
 help:
@@ -179,6 +179,3 @@ help:
 	@echo "Build for RELEASE with the following command:"
 	@echo " make
 	@echo
-
-# 伪目标声明
-.PHONY: all clean test help

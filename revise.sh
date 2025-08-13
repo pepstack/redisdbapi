@@ -21,8 +21,8 @@ set -o nounset  # Treat unset variables as an error
 #set -o errexit  # Treat any error as exit
 
 # 配置全局变量
-AUTHOR="mapaware@hotmail.com"
-COPYRIGHT="© 2024-2030 mapaware.top All Rights Reserved."
+AUTHOR=$(cat "$_thisdir"/AUTHOR)
+COPYRIGHT=$(cat "$_thisdir"/COPYRIGHT)
 
 ###############################################################
 # 配置：需要忽略的目录列表
